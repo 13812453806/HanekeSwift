@@ -7,13 +7,14 @@
 //
 
 import XCTest
+@testable import Haneke
 
 class HanekeTests: XCTestCase {
 
     func testErrorWithCode() {
         let code = 200
         let description = self.name
-        let error = errorWithCode(code, description:description)
+        let error = errorWithCode(code, description:description!)
         
         XCTAssertEqual(error.domain, HanekeGlobals.Domain)
         XCTAssertEqual(error.code, code)
@@ -21,19 +22,19 @@ class HanekeTests: XCTestCase {
     }
     
     func testSharedImageCache() {
-        let cache = Shared.imageCache
+        Shared.imageCache
     }
     
     func testSharedDataCache() {
-        let cache = Shared.dataCache
+        Shared.dataCache
     }
     
     func testSharedStringCache() {
-        let cache = Shared.stringCache
+        Shared.stringCache
     }
     
     func testSharedJSONCache() {
-        let cache = Shared.JSONCache
+        Shared.JSONCache
     }
     
 }

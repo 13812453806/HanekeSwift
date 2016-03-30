@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+@testable import Haneke
 
 class FetchTests : XCTestCase {
     
@@ -19,7 +20,7 @@ class FetchTests : XCTestCase {
     }
 
     func testHasSucceded_True() {
-        sut.succeed(self.name)
+        sut.succeed(self.name!)
         
         XCTAssertTrue(sut.hasSucceeded)
     }
@@ -45,18 +46,18 @@ class FetchTests : XCTestCase {
     }
     
     func testHasSucceded_AfterSucceed_False() {
-        sut.succeed(self.name)
+        sut.succeed(self.name!)
         
         XCTAssertFalse(sut.hasFailed)
     }
     
     func testSucceed() {
-        sut.succeed(self.name)
+        sut.succeed(self.name!)
     }
 
     func testSucceed_AfterOnSuccess() {
-        let value = self.name
-        let expectation = self.expectationWithDescription(self.name)
+        let value = self.name!
+        let expectation = self.expectationWithDescription(value)
         sut.onSuccess {
             XCTAssertEqual($0, value)
             expectation.fulfill()
@@ -72,8 +73,8 @@ class FetchTests : XCTestCase {
     }
     
     func testFail_AfterOnFailure() {
-        let error = NSError(domain: self.name, code: 10, userInfo: nil)
-        let expectation = self.expectationWithDescription(self.name)
+        let error = NSError(domain: self.name!, code: 10, userInfo: nil)
+        let expectation = self.expectationWithDescription(self.name!)
         sut.onFailure {
             XCTAssertEqual($0!, error)
             expectation.fulfill()
@@ -91,9 +92,9 @@ class FetchTests : XCTestCase {
     }
     
     func testOnSuccess_AfterSucceed() {
-        let value = self.name
+        let value = self.name!
         sut.succeed(value)
-        let expectation = self.expectationWithDescription(self.name)
+        let expectation = self.expectationWithDescription(value)
         
         sut.onSuccess {
             XCTAssertEqual($0, value)
@@ -110,9 +111,9 @@ class FetchTests : XCTestCase {
     }
     
     func testOnFailure_AfterFail() {
-        let error = NSError(domain: self.name, code: 10, userInfo: nil)
+        let error = NSError(domain: self.name!, code: 10, userInfo: nil)
         sut.fail(error)
-        let expectation = self.expectationWithDescription(self.name)
+        let expectation = self.expectationWithDescription(self.name!)
         
         sut.onFailure {
             XCTAssertEqual($0!, error)
